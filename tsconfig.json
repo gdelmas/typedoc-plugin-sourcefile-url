@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "outDir": "dist/"
+  },
+  "include": [
+    "src/*.ts",
+    "src/*.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
