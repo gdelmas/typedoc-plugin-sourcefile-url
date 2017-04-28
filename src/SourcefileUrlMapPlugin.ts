@@ -19,31 +19,7 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
 
     public initialize(): void
     {
-        // read options parameter
-        const options: Options = this.application.options
-        options.read({}, OptionsReadMode.Prefetch)
-        const mapRelativePath = options.getValue('sourcefile-url-map')
-        const urlPrefix = options.getValue('sourcefile-url-prefix')
-
-        if ( (typeof mapRelativePath !== 'string') && (typeof urlPrefix !== 'string') ) {
-            return
-        }
-
         try {
-            if ( (typeof mapRelativePath === 'string') && (typeof urlPrefix === 'string') ) {
-                throw new Error('use either --sourcefile-url-prefix or --sourcefile-url-map option')
-            }
-
-            if ( typeof mapRelativePath === 'string' ) {
-                this.readMappingJson(mapRelativePath)
-            }
-            else if ( typeof urlPrefix === 'string' ) {
-                this.mappings = [{
-                    pattern: new RegExp('^'),
-                    replace: urlPrefix
-                }]
-            }
-
             // register handler
             this.listenTo(this.owner, Converter.EVENT_RESOLVE_END, this.onEndResolve)
         }
@@ -97,6 +73,36 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
 
     private onEndResolve(context: Context): void
     {
+        // read options parameter
+        const options: Options = this.application.options
+        options.read({}, OptionsReadMode.Prefetch)
+        const mapRelativePath = options.getValue('sourcefile-url-map')
+        const urlPrefix = options.getValue('sourcefile-url-prefix')
+
+        if ( (typeof mapRelativePath !== 'string') && (typeof urlPrefix !== 'string') ) {
+            return
+        }
+
+        try {
+            if ( (typeof mapRelativePath === 'string') && (typeof urlPrefix === 'string') ) {
+                throw new Error('use either --sourcefile-url-prefix or --sourcefile-url-map option')
+            }
+
+            if ( typeof mapRelativePath === 'string' ) {
+                this.readMappingJson(mapRelativePath)
+            }
+            else if ( typeof urlPrefix === 'string' ) {
+                this.mappings = [{
+                    pattern: new RegExp('^'),
+                    replace: urlPrefix
+                }]
+            }
+
+        }
+        catch ( e ) {
+            console.error('typedoc-plugin-sourcefile-url: ' + e.message)
+        }
+
         if ( this.mappings === undefined ) {
             throw new Error('assertion fail')
         }
