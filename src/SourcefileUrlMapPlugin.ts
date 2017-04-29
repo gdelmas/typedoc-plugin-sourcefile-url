@@ -5,7 +5,7 @@ import {ConverterComponent} from 'typedoc/dist/lib/converter/components'
 import {Converter} from 'typedoc/dist/lib/converter/converter'
 import {Context} from 'typedoc/dist/lib/converter/context'
 import {SourceReference} from 'typedoc/dist/lib/models/sources/file'
-import {Options, OptionsReadMode} from 'typedoc/dist/lib/utils/options/options'
+import {Options} from 'typedoc/dist/lib/utils/options/options'
 
 interface Mapping {
     pattern: RegExp,
@@ -19,9 +19,13 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
 
     public initialize(): void
     {
+        this.listenTo(this.owner, Converter.EVENT_BEGIN, this.onBegin)
+    }
+
+    private onBegin(): void
+    {
         // read options parameter
         const options: Options = this.application.options
-        options.read({}, OptionsReadMode.Prefetch)
         const mapRelativePath = options.getValue('sourcefile-url-map')
         const urlPrefix = options.getValue('sourcefile-url-prefix')
 
