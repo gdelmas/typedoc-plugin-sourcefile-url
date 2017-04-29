@@ -6,5 +6,5 @@ module.exports = function(PluginHost) {
     app.options.addDeclaration({name: 'sourcefile-url-map'});
     app.options.addDeclaration({name: 'sourcefile-url-prefix'});
 
-    app.converter.addComponent('sourcefile-url-map', plugin.SourcefileUrlMapPlugin);
+    app.converter.addComponent('sourcefile-url', plugin.SourcefileUrlMapPlugin);
 };
