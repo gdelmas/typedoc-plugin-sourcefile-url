@@ -49,4 +49,4 @@ There can be one or more mapping rules. For each *Defined in* only the first rul
 
 ---
 
-The options are mutually exclusive. It is not possible to use `--sourcefile-url-prefix` and `--sourcefile-url-prefix` at the same time.
+The options are mutually exclusive. It is not possible to use `--sourcefile-url-prefix` and `--sourcefile-url-map` at the same time.
