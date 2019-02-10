@@ -1,8 +1,7 @@
 import * as Path from 'path'
 import * as FS from 'fs-extra'
-import {Component} from 'typedoc/dist/lib/utils/component'
-import {ConverterComponent} from 'typedoc/dist/lib/converter/components'
-import {Converter} from 'typedoc/dist/lib/converter/converter'
+import {Component, ConverterComponent} from 'typedoc/dist/lib/converter/components';
+import {Converter} from 'typedoc/dist/lib/converter/converter';
 import {Context} from 'typedoc/dist/lib/converter/context'
 import {SourceReference} from 'typedoc/dist/lib/models/sources/file'
 import {Options} from 'typedoc/dist/lib/utils/options/options'
@@ -19,7 +18,9 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
 
     public initialize(): void
     {
-        this.listenTo(this.owner, Converter.EVENT_BEGIN, this.onBegin)
+      this.listenTo(this.owner, {
+          [Converter.EVENT_BEGIN]: this.onBegin
+      })
     }
 
     private onBegin(): void
@@ -49,7 +50,9 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
             }
 
             // register handler
-            this.listenTo(this.owner, Converter.EVENT_RESOLVE_END, this.onEndResolve)
+            this.listenTo(this.owner, {
+              [Converter.EVENT_RESOLVE_END]: this.onEndResolve,
+            })
         }
         catch ( e ) {
             console.error('typedoc-plugin-sourcefile-url: ' + e.message)
