@@ -15,6 +15,7 @@ interface Mapping {
 export class SourcefileUrlMapPlugin extends ConverterComponent {
 
     private mappings: Mapping[] | undefined
+    private linesStr: string | undefined
 
     public initialize(): void
     {
@@ -29,6 +30,8 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
         const options: Options = this.application.options
         const mapRelativePath = options.getValue('sourcefile-url-map')
         const urlPrefix = options.getValue('sourcefile-url-prefix')
+
+        this.linesStr = options.getValue('sourcefile-url-lines-str') || '#L'
 
         if ( (typeof mapRelativePath !== 'string') && (typeof urlPrefix !== 'string') ) {
             return
@@ -127,7 +130,7 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
             if ( reflection.sources ) {
                 reflection.sources.forEach((source: SourceReference) => {
                     if (source.file && source.file.url) {
-                        source.url = source.file.url + '#L' + source.line
+                        source.url = source.file.url + this.linesStr + source.line
                     }
                 })
             }

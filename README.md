@@ -47,6 +47,8 @@ The `your-sourcefile-map.json` structure is:
 
 There can be one or more mapping rules. For each *Defined in* only the first rule that matches is applied. In the above example the last rule would match all source files that did not start with `modules/module-one`. This compares to the *Simple Prefix* option.
 
+If you need to pass a custom string to indicate the line numeber in the url (defaults to `#L`), you can pass the `--sourcefile-url-lines-str` option.
+
 ---
 
 The options are mutually exclusive. It is not possible to use `--sourcefile-url-prefix` and `--sourcefile-url-map` at the same time.
