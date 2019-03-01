@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "typedoc": "^0.5.10",
-    "typescript": "^2.1.5"
+    "typescript": "^3.3.0"
   },
   "main": "dist/main.js",
   "scripts": {
