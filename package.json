@@ -1,7 +1,7 @@
 {
   "author": "Gerard Delmàs",
   "name": "typedoc-plugin-sourcefile-url",
-  "version": "2.0.0",
+  "version": "1.0.4",
   "description": "typedoc plugin to set custom source file URL links",
   "homepage": "https://github.com/gdelmas/typedoc-plugin-sourcefile-url",
   "bugs": "https://github.com/gdelmas/typedoc-plugin-sourcefile-url/issues",
@@ -17,16 +17,15 @@
     "gitlab"
   ],
   "peerDependencies": {
-    "typedoc": "^0.14.0",
-    "typescript": "^3.2.0"
+    "typedoc": ">=0.14.0"
   },
   "devDependencies": {
     "typedoc": "^0.14.0",
-    "typescript": "^3.2.0"
+    "typescript": "^3.3.0"
   },
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   }
 }
