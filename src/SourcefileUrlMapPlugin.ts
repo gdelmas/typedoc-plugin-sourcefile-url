@@ -29,19 +29,22 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
         const mapRelativePath = options.getValue('sourcefile-url-map')
         const urlPrefix = options.getValue('sourcefile-url-prefix')
 
-        if ( (typeof mapRelativePath !== 'string') && (typeof urlPrefix !== 'string') ) {
+    		const isMapRelativePath = typeof mapRelativePath === 'string' && mapRelativePath
+    		const isUrlPrefix = typeof urlPrefix === 'string' && urlPrefix
+
+        if ( !isMapRelativePath && !isUrlPrefix ) {
             return
         }
 
         try {
-            if ( (typeof mapRelativePath === 'string') && (typeof urlPrefix === 'string') ) {
+            if ( isMapRelativePath && isUrlPrefix ) {
                 throw new Error('use either --sourcefile-url-prefix or --sourcefile-url-map option')
             }
 
-            if ( typeof mapRelativePath === 'string' ) {
+            if ( isMapRelativePath ) {
                 this.readMappingJson(mapRelativePath)
             }
-            else if ( typeof urlPrefix === 'string' ) {
+            else if ( isUrlPrefix ) {
                 this.mappings = [{
                     pattern: new RegExp('^'),
                     replace: urlPrefix
