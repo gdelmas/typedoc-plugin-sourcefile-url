@@ -29,8 +29,8 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
         const mapRelativePath = options.getValue('sourcefile-url-map')
         const urlPrefix = options.getValue('sourcefile-url-prefix')
 
-    		const isMapRelativePath = typeof mapRelativePath === 'string' && mapRelativePath
-    		const isUrlPrefix = typeof urlPrefix === 'string' && urlPrefix
+        const isMapRelativePath = typeof mapRelativePath === 'string' && mapRelativePath
+        const isUrlPrefix = typeof urlPrefix === 'string' && urlPrefix
 
         if ( !isMapRelativePath && !isUrlPrefix ) {
             return
