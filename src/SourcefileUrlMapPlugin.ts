@@ -1,5 +1,5 @@
 import * as Path from 'path'
-import * as FS from 'fs-extra'
+import * as FS from 'fs'
 import {Component} from 'typedoc/dist/lib/utils/component'
 import {ConverterComponent} from 'typedoc/dist/lib/converter/components'
 import {Converter} from 'typedoc/dist/lib/converter/converter'
