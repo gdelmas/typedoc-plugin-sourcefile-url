@@ -1,5 +1,5 @@
-import * as Path from 'path'
-import * as FS from 'fs'
+import * as path from 'path'
+import * as fs from 'fs'
 import {Component} from 'typedoc/dist/lib/utils/component'
 import {ConverterComponent} from 'typedoc/dist/lib/converter/components'
 import {Converter} from 'typedoc/dist/lib/converter/converter'
@@ -59,11 +59,11 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
     private readMappingJson(mapRelativePath: string): void
     {
         // load json
-        const mapAbsolutePath = Path.join(process.cwd(), mapRelativePath)
+        const mapAbsolutePath = path.join(process.cwd(), mapRelativePath)
 
         let json: any
         try {
-            json = JSON.parse(FS.readFileSync(mapAbsolutePath, 'utf8'))
+            json = JSON.parse(fs.readFileSync(mapAbsolutePath, 'utf8'))
         }
         catch ( e ) {
             throw new Error('error reading --sourcefile-url-map json file: ' + e.message)
