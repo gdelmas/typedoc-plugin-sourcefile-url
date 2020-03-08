@@ -17,11 +17,12 @@
     "gitlab"
   ],
   "peerDependencies": {
-    "typedoc": ">=0.14.0"
+    "typedoc": ">=0.16.0"
   },
   "devDependencies": {
-    "typedoc": "^0.14.0",
-    "typescript": "^3.3.0"
+    "@types/node": "^13.9.0",
+    "typedoc": "^0.16.11",
+    "typescript": "^3.7.5"
   },
   "main": "dist/main.js",
   "scripts": {
