@@ -24,24 +24,23 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
 
     private onBegin(): void
     {
-        // read options parameter
-        const options: Options = this.application.options
-        const mapRelativePath = options.getValue('sourcefile-url-map')
-        const urlPrefix = options.getValue('sourcefile-url-prefix')
+        // read options parameters
+        const mapRelativePath = this.readStringOption('sourcefile-url-map')
+        const urlPrefix = this.readStringOption('sourcefile-url-prefix')
 
-        if ( (typeof mapRelativePath !== 'string') && (typeof urlPrefix !== 'string') ) {
+        if ( !mapRelativePath && !urlPrefix ) {
             return
         }
 
         try {
-            if ( (typeof mapRelativePath === 'string') && (typeof urlPrefix === 'string') ) {
+            if ( mapRelativePath && urlPrefix ) {
                 throw new Error('use either --sourcefile-url-prefix or --sourcefile-url-map option')
             }
 
-            if ( typeof mapRelativePath === 'string' ) {
+            if ( mapRelativePath ) {
                 this.readMappingJson(mapRelativePath)
             }
-            else if ( typeof urlPrefix === 'string' ) {
+            else if ( urlPrefix ) {
                 this.mappings = [{
                     pattern: new RegExp('^'),
                     replace: urlPrefix
@@ -54,6 +53,17 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
         catch ( e ) {
             console.error('typedoc-plugin-sourcefile-url: ' + e.message)
         }
+    }
+
+    private readStringOption(name: string): string | undefined {
+        const options: Options = this.application.options
+        const value = options.getValue(name)
+
+        if (typeof value !== "string") {
+            return undefined
+        }
+
+        return value
     }
 
     private readMappingJson(mapRelativePath: string): void
