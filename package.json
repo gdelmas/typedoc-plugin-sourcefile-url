@@ -1,7 +1,7 @@
 {
   "author": "Gerard Delmàs",
   "name": "typedoc-plugin-sourcefile-url",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "typedoc plugin to set custom source file URL links",
   "homepage": "https://github.com/gdelmas/typedoc-plugin-sourcefile-url",
   "bugs": "https://github.com/gdelmas/typedoc-plugin-sourcefile-url/issues",
