@@ -1,32 +1,46 @@
 import * as path from 'path'
 import * as fs from 'fs'
-import {Component} from 'typedoc/dist/lib/utils/component'
-import {ConverterComponent} from 'typedoc/dist/lib/converter/components'
-import {Converter} from 'typedoc/dist/lib/converter/converter'
-import {Context} from 'typedoc/dist/lib/converter/context'
-import {SourceReference} from 'typedoc/dist/lib/models/sources/file'
-import {Options} from 'typedoc/dist/lib/utils/options/options'
+import {
+    Application,
+    Converter,
+    Context,
+    ParameterType,
+    SourceReference
+} from 'typedoc';
 
 interface Mapping {
     pattern: RegExp,
     replace: string
 }
 
-@Component({name: 'sourcefile-url'})
-export class SourcefileUrlMapPlugin extends ConverterComponent {
-
+export class SourcefileUrlMapPlugin {
     private mappings: Mapping[] | undefined
 
-    public initialize(): void
-    {
-        this.listenTo(this.owner, Converter.EVENT_BEGIN, this.onBegin)
+    public initialize(app: Readonly<Application>): void {
+        app.options.addDeclaration({
+            name: "sourcefile-url-map",
+            help: "Will create URLs by prefixing the given parameter in front of each source file",
+            type: ParameterType.String
+        });
+
+        app.options.addDeclaration({
+            name: "sourcefile-url-prefix",
+            help: "Allows for advanced mappings as described in a JSON file",
+            type: ParameterType.String
+        });
+        this.subscribeToApplicationEvents(app);
     }
 
-    private onBegin(): void
+    private subscribeToApplicationEvents(app: Readonly<Application>): void {
+        app.converter.on(Converter.EVENT_BEGIN, () => this.onBegin(app));
+        app.converter.on(Converter.EVENT_RESOLVE_END, (context: Context) => this.onEndResolve(context));
+    }
+
+    private onBegin(app: Readonly<Application>): void
     {
         // read options parameters
-        const mapRelativePath = this.readStringOption('sourcefile-url-map')
-        const urlPrefix = this.readStringOption('sourcefile-url-prefix')
+        const mapRelativePath = this.readStringOption(app, 'sourcefile-url-map')
+        const urlPrefix = this.readStringOption(app, 'sourcefile-url-prefix')
 
         if ( !mapRelativePath && !urlPrefix ) {
             return
@@ -46,18 +60,14 @@ export class SourcefileUrlMapPlugin extends ConverterComponent {
                     replace: urlPrefix
                 }]
             }
-
-            // register handler
-            this.listenTo(this.owner, Converter.EVENT_RESOLVE_END, this.onEndResolve)
         }
         catch ( e ) {
             console.error('typedoc-plugin-sourcefile-url: ' + e.message)
         }
     }
 
-    private readStringOption(name: string): string | undefined {
-        const options: Options = this.application.options
-        const value = options.getValue(name)
+    private readStringOption(app: Readonly<Application>, name: string): string | undefined {
+        const value = app.options.getValue(name)
 
         if (typeof value !== "string") {
             return undefined
