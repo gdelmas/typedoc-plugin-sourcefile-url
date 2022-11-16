@@ -1,3 +1,8 @@
+# ⛔️ ⛔️ ⛔️ DEPRECATED ⛔️ ⛔️ ⛔️
+### typedoc-plugin-sourcefile-url is no longer maintained
+
+---
+
 [typedoc](https://github.com/TypeStrong/typedoc) plugin to set custom source file URL links.
 
 typedoc prints a *Defined in* statement showing the source file and line for all definitions. For projects hosted on GitHub this statement will automatically link to the source file.
