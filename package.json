@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "^13.9.0",
-    "typedoc": "^0.16.11",
+    "typedoc": "^0.24.4",
     "typescript": "^3.7.5"
   },
   "main": "dist/main.js",
